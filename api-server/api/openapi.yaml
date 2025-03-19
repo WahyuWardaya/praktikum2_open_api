@@ -1,0 +1,130 @@
+openapi: 3.0.3
+info:
+  title: Praktek rest Api
+  version: "1.0"
+servers:
+- url: http://localhost:3000
+paths:
+  /users:
+    get:
+      description: end point untuk mendapat semua user
+      operationId: usersGET
+      parameters: []
+      responses:
+        "200":
+          content:
+            aplication/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/user'
+                type: array
+          description: Berhasil
+        "500":
+          description: server gagal
+        "403":
+          description: tidak di ijinkan
+      x-eov-operation-handler: controllers/DefaultController
+  /user/{id}:
+    delete:
+      description: end point untuk menghapus user berdasarkan id
+      operationId: userIdDELETE
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          description: Berhasil
+        "500":
+          description: server gagal
+        "403":
+          description: akses ditolak/tidak di ijinkan
+      x-eov-operation-handler: controllers/DefaultController
+    get:
+      description: endpoint untuk mendapatkan user sesuai id
+      operationId: userIdGET
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            aplication/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/user'
+                type: array
+          description: Berhasil
+        "500":
+          description: server gagal
+        "403":
+          description: akses ditolak/tidak di ijinkan
+      x-eov-operation-handler: controllers/DefaultController
+    put:
+      description: endpoint untuk mengubah data user bedasarkan id
+      operationId: userIdPUT
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: email
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: age
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            aplication/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/user'
+                type: array
+          description: Berhasil
+      x-eov-operation-handler: controllers/DefaultController
+components:
+  schemas:
+    user:
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        age:
+          type: integer
+        creatdAt:
+          type: string
+        updatedAt:
+          type: string
+      type: object

@@ -25,6 +25,7 @@ components:
 paths:
   /users:
     get:
+      operationId: getUsers
       description: end point untuk mendapat semua user
       parameters: []
       responses:
@@ -42,6 +43,7 @@ paths:
           description: tidak di ijinkan
   /user/{id}:
     get:
+      operationId: getUserById
       description: endpoint untuk mendapatkan user sesuai id
       parameters:
         - name: id
@@ -63,6 +65,7 @@ paths:
         '403':
           description: akses ditolak/tidak di ijinkan
     delete:
+      operationId: deleteUserById
       description: end point untuk menghapus user berdasarkan id
       parameters:
         - name: id
@@ -78,6 +81,7 @@ paths:
         '403':
           description: akses ditolak/tidak di ijinkan
     put:
+      operationId: updateUserById
       description: endpoint untuk mengubah data user bedasarkan id
       parameters:
         - name: id

@@ -3,17 +3,17 @@ info:
   title: Praktek rest Api
   version: "1.0"
 servers:
-- url: http://localhost:3000
+- url: http://localhost:3000/v1
 paths:
   /users:
     get:
       description: end point untuk mendapat semua user
-      operationId: usersGET
+      operationId: getUsers
       parameters: []
       responses:
         "200":
           content:
-            aplication/json:
+            application/json:
               schema:
                 items:
                   $ref: '#/components/schemas/user'
@@ -27,7 +27,7 @@ paths:
   /user/{id}:
     delete:
       description: end point untuk menghapus user berdasarkan id
-      operationId: userIdDELETE
+      operationId: deleteUserById
       parameters:
       - explode: false
         in: path
@@ -46,7 +46,7 @@ paths:
       x-eov-operation-handler: controllers/DefaultController
     get:
       description: endpoint untuk mendapatkan user sesuai id
-      operationId: userIdGET
+      operationId: getUserById
       parameters:
       - explode: false
         in: path
@@ -58,7 +58,7 @@ paths:
       responses:
         "200":
           content:
-            aplication/json:
+            application/json:
               schema:
                 items:
                   $ref: '#/components/schemas/user'
@@ -71,7 +71,7 @@ paths:
       x-eov-operation-handler: controllers/DefaultController
     put:
       description: endpoint untuk mengubah data user bedasarkan id
-      operationId: userIdPUT
+      operationId: updateUserById
       parameters:
       - explode: false
         in: path
@@ -80,40 +80,57 @@ paths:
         schema:
           type: integer
         style: simple
-      - explode: false
-        in: path
-        name: name
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateUserById_request'
         required: true
-        schema:
-          type: string
-        style: simple
-      - explode: false
-        in: path
-        name: email
-        required: true
-        schema:
-          type: string
-        style: simple
-      - explode: false
-        in: path
-        name: age
-        required: true
-        schema:
-          type: integer
-        style: simple
       responses:
         "200":
           content:
-            aplication/json:
+            application/json:
               schema:
                 items:
                   $ref: '#/components/schemas/user'
                 type: array
           description: Berhasil
       x-eov-operation-handler: controllers/DefaultController
+  /user:
+    post:
+      description: endpoint untuk membuat user baru
+      operationId: createUser
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateUserById_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/user'
+                type: array
+          description: Berhasil
+        "500":
+          description: server gagal
+        "403":
+          description: akses ditolak/tidak di ijinkan
+      x-eov-operation-handler: controllers/DefaultController
 components:
   schemas:
     user:
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        name: name
+        id: 0
+        email: email
+        age: 6
+        updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
         id:
           type: integer
@@ -123,8 +140,23 @@ components:
           type: string
         age:
           type: integer
-        creatdAt:
+        createdAt:
+          format: date-time
           type: string
         updatedAt:
+          format: date-time
           type: string
+      type: object
+    updateUserById_request:
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        age:
+          type: integer
+      required:
+      - age
+      - email
+      - name
       type: object

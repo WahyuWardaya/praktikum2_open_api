@@ -8,26 +8,31 @@
 
 const Controller = require('./Controller');
 const service = require('../services/DefaultService');
-const userIdDELETE = async (request, response) => {
-  await Controller.handleRequest(request, response, service.userIdDELETE);
+const createUser = async (request, response) => {
+  await Controller.handleRequest(request, response, service.createUser);
 };
 
-const userIdGET = async (request, response) => {
-  await Controller.handleRequest(request, response, service.userIdGET);
+const deleteUserById = async (request, response) => {
+  await Controller.handleRequest(request, response, service.deleteUserById);
 };
 
-const userIdPUT = async (request, response) => {
-  await Controller.handleRequest(request, response, service.userIdPUT);
+const getUserById = async (request, response) => {
+  await Controller.handleRequest(request, response, service.getUserById);
 };
 
-const usersGET = async (request, response) => {
-  await Controller.handleRequest(request, response, service.usersGET);
+const getUsers = async (request, response) => {
+  await Controller.handleRequest(request, response, service.getUsers);
+};
+
+const updateUserById = async (request, response) => {
+  await Controller.handleRequest(request, response, service.updateUserById);
 };
 
 
 module.exports = {
-  userIdDELETE,
-  userIdGET,
-  userIdPUT,
-  usersGET,
+  createUser,
+  deleteUserById,
+  getUserById,
+  getUsers,
+  updateUserById,
 };

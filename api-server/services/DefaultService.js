@@ -2,12 +2,32 @@
 const Service = require('./Service');
 
 /**
+* endpoint untuk membuat user baru
+*
+* updateUserByIdRequest UpdateUserByIdRequest 
+* returns List
+* */
+const createUser = ({ updateUserByIdRequest }) => new Promise(
+  async (resolve, reject) => {
+    try {
+      resolve(Service.successResponse({
+        updateUserByIdRequest,
+      }));
+    } catch (e) {
+      reject(Service.rejectResponse(
+        e.message || 'Invalid input',
+        e.status || 405,
+      ));
+    }
+  },
+);
+/**
 * end point untuk menghapus user berdasarkan id
 *
 * id Integer 
 * no response value expected for this operation
 * */
-const userIdDELETE = ({ id }) => new Promise(
+const deleteUserById = ({ id }) => new Promise(
   async (resolve, reject) => {
     try {
       resolve(Service.successResponse({
@@ -27,37 +47,11 @@ const userIdDELETE = ({ id }) => new Promise(
 * id Integer 
 * returns List
 * */
-const userIdGET = ({ id }) => new Promise(
+const getUserById = ({ id }) => new Promise(
   async (resolve, reject) => {
     try {
       resolve(Service.successResponse({
         id,
-      }));
-    } catch (e) {
-      reject(Service.rejectResponse(
-        e.message || 'Invalid input',
-        e.status || 405,
-      ));
-    }
-  },
-);
-/**
-* endpoint untuk mengubah data user bedasarkan id
-*
-* id Integer 
-* name String 
-* email String 
-* age Integer 
-* returns List
-* */
-const userIdPUT = ({ id, name, email, age }) => new Promise(
-  async (resolve, reject) => {
-    try {
-      resolve(Service.successResponse({
-        id,
-        name,
-        email,
-        age,
       }));
     } catch (e) {
       reject(Service.rejectResponse(
@@ -72,7 +66,7 @@ const userIdPUT = ({ id, name, email, age }) => new Promise(
 *
 * returns List
 * */
-const usersGET = () => new Promise(
+const getUsers = () => new Promise(
   async (resolve, reject) => {
     try {
       resolve(Service.successResponse({
@@ -85,10 +79,33 @@ const usersGET = () => new Promise(
     }
   },
 );
+/**
+* endpoint untuk mengubah data user bedasarkan id
+*
+* id Integer 
+* updateUserByIdRequest UpdateUserByIdRequest 
+* returns List
+* */
+const updateUserById = ({ id, updateUserByIdRequest }) => new Promise(
+  async (resolve, reject) => {
+    try {
+      resolve(Service.successResponse({
+        id,
+        updateUserByIdRequest,
+      }));
+    } catch (e) {
+      reject(Service.rejectResponse(
+        e.message || 'Invalid input',
+        e.status || 405,
+      ));
+    }
+  },
+);
 
 module.exports = {
-  userIdDELETE,
-  userIdGET,
-  userIdPUT,
-  usersGET,
+  createUser,
+  deleteUserById,
+  getUserById,
+  getUsers,
+  updateUserById,
 };
